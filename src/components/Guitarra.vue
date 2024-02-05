@@ -14,9 +14,17 @@
             <h3 class="text-black fs-4 fw-bold text-uppercase">
                 {{ guitarra.nombre }}
             </h3>
+            <!-- <p>const # Inline Handlers : {{ numero }}</p> -->
+            <!-- v-on:click="numero++" -->
+            <!-- <p>const # Method Handlers : {{ numero }}</p> -->
+            <p>{{ numero }}</p>
             <p>{{ guitarra.descripcion }}</p>
             <p class="fw-black text-primary fs-3">${{ guitarra.precio }}</p>
-            <button type="button" class="btn btn-dark w-100">
+            <button
+                type="button"
+                class="btn btn-dark w-100"
+                v-on:click="$emit('agregar-carrito')"
+            >
                 Agregar al Carrito
             </button>
         </div>
@@ -24,6 +32,12 @@
 </template>
 
 <script setup>
+import { ref } from "vue";
+
+const numero = ref(0);
+
+defineEmits(["agregar-carrito"]);
+
 // Se utiliza la función defineProps() para definir las propiedades que se esperan recibir en el componente.
 const props = defineProps({
     // Se define la propiedad 'guitarra'.

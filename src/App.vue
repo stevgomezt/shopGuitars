@@ -123,6 +123,7 @@
                 <Guitarra
                     v-for="guitarra in guitarras"
                     v-bind:guitarra="guitarra"
+                    v-on:agregar-carrito="agregarCarrito"
                 />
                 <!-- La directiva v-for se utiliza para renderizar múltiples instancias del componente Guitarra,
                 una para cada elemento en la lista guitarras.
@@ -153,6 +154,11 @@ import { db } from "./data/guitarras.js";
 
 // Se declara una referencia 'guitarras' utilizando la función ref. Esta referencia almacena una lista de guitarras y es reactiva.
 const guitarras = ref([]);
+
+const agregarCarrito = () => {
+    numero.value++;
+    // alert("agregando...");
+};
 
 // La función 'onMounted' se ejecuta cuando el componente se monta en el DOM.
 // Se utiliza para realizar operaciones después de que el componente ha sido montado.
