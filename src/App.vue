@@ -37,6 +37,13 @@ import { db } from "./data/guitarras.js";
 const guitarras = ref([]);
 const carrito = ref([]);
 
+// La función 'onMounted' se ejecuta cuando el componente se monta en el DOM.
+// Se utiliza para realizar operaciones después de que el componente ha sido montado.
+onMounted(() => {
+    // Se asigna el valor de la base de datos 'db' a la referencia 'guitarras'.
+    guitarras.value = db;
+});
+
 const agregarCarrito = (guitarra) => {
     // numero.value++;
     // alert("agregando...");
@@ -44,13 +51,6 @@ const agregarCarrito = (guitarra) => {
     guitarra.cantidad = 1;
     carrito.value.push(guitarra);
 };
-
-// La función 'onMounted' se ejecuta cuando el componente se monta en el DOM.
-// Se utiliza para realizar operaciones después de que el componente ha sido montado.
-onMounted(() => {
-    // Se asigna el valor de la base de datos 'db' a la referencia 'guitarras'.
-    guitarras.value = db;
-});
 
 // console.log(guitarras.value);
 </script>
