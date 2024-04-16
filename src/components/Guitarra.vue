@@ -1,29 +1,31 @@
 <template>
     <div class="col-md-6 col-lg-4 my-4 row align-items-center">
         <div class="col-4">
-            <!-- Se define una etiqueta 'img' que mostrará la imagen de la guitarra. -->
+            <!-- Imagen del producto: Utiliza v-bind para enlazar dinámicamente los atributos 'src' y 'alt'
+                 con los datos de la guitarra, asegurando que la imagen y su texto alternativo se actualicen
+                 con la información correcta. -->
             <img
                 class="img-fluid"
-                v-bind:src="'/img/' + guitarra.imagen + '.jpg'"
-                v-bind:alt="'imagen guitarra' + guitarra.nombre"
+                :src="'/img/' + guitarra.imagen + '.jpg'"
+                :alt="'imagen guitarra ' + guitarra.nombre"
             />
-            <!--Utiliza v-bind para enlazar dinámicamente el atributo src a la imagen de la guitarra.
-            Utiliza v-bind para enlazar dinámicamente el atributo alt al nombre de la guitarra.-->
         </div>
         <div class="col-8">
+            <!-- Nombre de la guitarra: Muestra el nombre usando una interpolación directa dentro de un elemento <h3>. -->
             <h3 class="text-black fs-4 fw-bold text-uppercase">
                 {{ guitarra.nombre }}
             </h3>
-            <!-- <p>const # Inline Handlers : {{ numero }}</p> -->
-            <!-- v-on:click="numero++" -->
-            <!-- <p>const # Method Handlers : {{ numero }}</p> -->
+            <!-- Visualización de un número que puede ser incrementado o manipulado dentro del componente. -->
             <p>{{ numero }}</p>
+            <!-- Descripción de la guitarra: Muestra la descripción proporcionada en la propiedad de la guitarra. -->
             <p>{{ guitarra.descripcion }}</p>
-            <p class="fw-black text-primary fs-3">${{ guitarra.precio }}</p>
+            <!-- Precio de la guitarra: Formatea y muestra el precio como un valor monetario. -->
+            <p class="fw-bold text-primary fs-3">${{ guitarra.precio }}</p>
+            <!-- Botón para agregar al carrito: Emite un evento personalizado al hacer clic, pasando el objeto guitarra al componente padre. -->
             <button
                 type="button"
                 class="btn btn-dark w-100"
-                v-on:click="$emit('agregar-carrito', guitarra)"
+                @click="$emit('agregar-carrito', guitarra)"
             >
                 Agregar al Carrito
             </button>
@@ -34,18 +36,17 @@
 <script setup>
 import { ref } from "vue";
 
+// Estado reactivo local que puede ser utilizado para pruebas o como contador.
 const numero = ref(0);
 
+// Define los eventos que este componente puede emitir.
 defineEmits(["agregar-carrito"]);
 
-// Se utiliza la función defineProps() para definir las propiedades que se esperan recibir en el componente.
+// Define las propiedades que el componente espera recibir.
 const props = defineProps({
-    // Se define la propiedad 'guitarra'.
     guitarra: {
-        // Se especifica el tipo de la propiedad como 'Object'.
-        type: Object,
-        // Se indica que la propiedad es requerida y debe ser proporcionada al componente.
-        required: true,
+        type: Object, // Especifica que la propiedad 'guitarra' debe ser un objeto.
+        required: true, // Indica que la propiedad 'guitarra' es obligatoria.
     },
 });
 </script>
