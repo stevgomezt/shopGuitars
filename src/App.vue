@@ -1,6 +1,13 @@
 <template>
     <div>
-        <Header />
+        <!-- las props se pasan con : , los custom events con @ -->
+        <Header
+            :carrito="carrito"
+            :guitarra="guitarra"
+            @decrementar-cantidad="decrementarCantidad"
+            @incrementar-cantidad="incrementarCantidad"
+            @agregar-carrito="agregarCarrito"
+        />
 
         <main class="container-xl mt-5">
             <h2 class="text-center">Nuestra Colección</h2>
@@ -35,6 +42,7 @@ import { db } from "./data/guitarras.js";
 
 // Se declara una referencia 'guitarras' utilizando la función ref. Esta referencia almacena una lista de guitarras y es reactiva.
 const guitarras = ref([]);
+const guitarra = ref({});
 const carrito = ref([]);
 
 // La función 'onMounted' se ejecuta cuando el componente se monta en el DOM.
@@ -42,14 +50,34 @@ const carrito = ref([]);
 onMounted(() => {
     // Se asigna el valor de la base de datos 'db' a la referencia 'guitarras'.
     guitarras.value = db;
+    guitarra.value = db[3];
 });
 
 const agregarCarrito = (guitarra) => {
-    // numero.value++;
-    // alert("agregando...");
     // console.log(guitarra);
-    guitarra.cantidad = 1;
-    carrito.value.push(guitarra);
+    // usamos '.value' ya que estamos utilizando ref([]),
+    const existeCarrito = carrito.value.findIndex(
+        (producto) => producto.id === guitarra.id
+    );
+
+    if (existeCarrito >= 0) {
+        carrito.value[existeCarrito].cantidad++;
+    } else {
+        guitarra.cantidad = 1;
+        carrito.value.push(guitarra);
+    }
+};
+
+const decrementarCantidad = (id) => {
+    const index = carrito.value.findIndex((producto) => producto.id === id);
+    if (carrito.value[index].cantidad <= 1) return;
+    carrito.value[index].cantidad--;
+};
+
+const incrementarCantidad = (id) => {
+    const index = carrito.value.findIndex((producto) => producto.id === id);
+    if (carrito.value[index].cantidad >= 5) return;
+    carrito.value[index].cantidad++;
 };
 
 // console.log(guitarras.value);
